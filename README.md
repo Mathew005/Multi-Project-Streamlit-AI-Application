@@ -40,8 +40,8 @@ Follow these steps to get the application running on your local machine.
 
 ### 2. Clone the Repository
 ```bash
-git clone <your-repository-url>
-cd <your-repository-name>
+git clone https://github.com/Mathew005/Multi-Project-Streamlit-AI-Application.git
+cd Multi-Project-Streamlit-AI-Application
 ```
 
 ### 3. Create a Virtual Environment
