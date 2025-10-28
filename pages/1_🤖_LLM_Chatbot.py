@@ -58,7 +58,9 @@ with st.sidebar:
     elif model_provider == "Gemini":
         if os.getenv("GEMINI_API_KEY"):
             st.success("Gemini API Key loaded.")
-            selected_model = "gemini/gemini-1.5-flash-latest"
+            # Use the model specified in the .env file, with proper prefixing
+            model_name = os.getenv("MODEL", "gemini-flash-latest")  # Default fallback if MODEL is not set
+            selected_model = f"gemini/{model_name}" if not model_name.startswith("gemini/") else model_name
         else:
             st.error("GEMINI_API_KEY not found.")
 
@@ -136,7 +138,8 @@ if prompt := st.chat_input("Ask a question..."):
                 elif model_provider == "Gemini":
                     api_key = os.getenv("GEMINI_API_KEY")
                     genai.configure(api_key=api_key)
-                    model = genai.GenerativeModel('gemini-1.5-flash-latest')
+                    model_name = os.getenv("MODEL", "gemini-flash-latest")  # Default fallback if MODEL is not set
+                    model = genai.GenerativeModel(model_name)
                     response = model.generate_content(prompt_for_llm)
                     response_text = response.text
                 

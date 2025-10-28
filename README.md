@@ -19,16 +19,38 @@ An efficient tool to generate detailed, structured summaries of your documents.
 - **Structured Output:** The summary is presented with clear headings and bullet points for enhanced readability.
 - **Streaming Responses:** Watch the summary get generated in real-time for a better user experience.
 
+### 📰 News Summarizer
+A real-time news summarizer that fetches trending news articles and generates AI summaries using the GNews API.
+- **GNews API Integration:** Uses the GNews API with a public API key to fetch news
+- **Category & Search:** Browse by categories (General, World, Business, Technology, etc.) or search for specific topics
+- **Language & Country Filters:** Select news in different languages and from specific countries
+- **Date Filtering:** Filter news by date range (Today, This week, This month, or All time)
+- **AI Summaries:** Generate summaries using either Gemini or Ollama models
+- **Database Caching:** News articles and AI summaries are cached in a local SQLite database to reduce API calls and improve performance
+- **Rate Limiting Handling:** Implements retry logic with exponential backoff to handle API rate limits gracefully
+- **Image Support:** Displays article images with proper container width
+
+### 🎙️ Meeting Notes & Action Item Extractor
+Converts meeting audio recordings into structured notes and action items.
+- **Audio Support:** Upload audio files in MP3, WAV, M4A, MP4, M4V, MOV formats
+- **Whisper Transcription:** Uses local Whisper model for speech-to-text conversion with chunked processing for better performance
+- **AI Processing:** Generates structured meeting summaries with key points, action items, decisions, and next steps
+- **Chunked Processing:** Processes long audio files in smaller chunks for better progress tracking and memory management
+- **Language Support:** Offers language selection for improved transcription accuracy
+- **Structured Output:** Provides organized sections for meeting points, action items, decisions, and next steps
+
 ## 🚀 Project Roadmap & To-Do List
 
 This project is actively being developed. Here is a list of planned features and applications:
 
-- [ ] **Global News Topic Tracker:** Scrape Google News and summarize trending topics using LLMs.
+- [x] **Global News Topic Tracker:** Scrape Google News and summarize trending topics using LLMs. (Updated with GNews API)
 - [ ] **Multi-Modal Assistant:** Build an assistant capable of answering queries based on both text and images.
-- [ ] **Meeting Notes and Action Item Extractor:** Create an app to convert meeting audio into structured notes and task lists using Whisper and other APIs.
+- [x] **Meeting Notes and Action Item Extractor:** Create an app to convert meeting audio into structured notes and task lists using Whisper and other APIs.
 - [ ] **Custom Chatbot Q&A (RAG Application):** Develop an AI system using LangChain and ChromaDB for advanced document Q&A.
 - [ ] **Multi-Agent System using LangGraph:** Build a multi-agent system for coding, testing, and debugging automation.
 - [ ] **Fine-Tuning Open-Source LLMs for Price Prediction (Optional Bonus Project):** Fine-tune an open-source model using QLoRA to predict product prices.
+
+Note: The News Summarizer and Meeting Notes Extractor have been completed and are now available in the application.
 
 ## 🛠️ Setup and Installation
 
@@ -64,6 +86,11 @@ requests
 python-dotenv
 google-generativeai
 PyPDF2
+feedparser
+faster-whisper
+pydub
+scipy
+numpy
 ```
 Then, install the packages:
 ```bash
@@ -84,6 +111,10 @@ OLLAMA_BASE_URL=http://127.0.0.1:11434
 # Get your API key from https://aistudio.google.com/app/apikey
 # Make sure to paste your actual key here
 GEMINI_API_KEY="YOUR_GEMINI_API_KEY_HERE"
+
+# --- Global Model Configuration ---
+# Model to use for all AI operations
+MODEL="gemini-flash-latest"
 ```
 **Important:** Replace `"YOUR_GEMINI_API_KEY_HERE"` with your actual Gemini API key.
 
@@ -110,7 +141,10 @@ The project is organized to support multiple pages, following Streamlit's multi-
 ├── main.py               # The main entry point for the Streamlit app (Welcome Page)
 ├── pages/                # Directory for individual Streamlit project pages
 │   ├── 1_🤖_LLM_Chatbot.py
-│   └── 2_📄_Document_Summarizer.py
+│   ├── 2_📄_Document_Summarizer.py
+│   ├── 3_🎙️_Meeting_Notes_Extractor.py
+│   └── 4_📰_News_Summarizer.py
 ├── requirements.txt      # List of Python dependencies
 ├── .gitignore
 └── README.md             # This file
+```

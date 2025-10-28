@@ -54,7 +54,9 @@ with st.sidebar:
     elif model_provider == "Gemini":
         if os.getenv("GEMINI_API_KEY"):
             st.success("Gemini API Key loaded successfully.")
-            selected_model = "gemini/gemini-1.5-flash-latest"
+            # Use the model specified in the .env file, with proper prefixing
+            model_name = os.getenv("MODEL", "gemini-flash-latest")  # Default fallback if MODEL is not set
+            selected_model = f"gemini/{model_name}" if not model_name.startswith("gemini/") else model_name
             st.info(f"Using model: **{selected_model.split('/')[-1]}**")
         else:
             st.error("GEMINI_API_KEY not found in your .env file.")
@@ -130,7 +132,8 @@ if st.button("Summarize Document", type="primary"):
                     with st.spinner("Generating summary with Gemini..."):
                         api_key = os.getenv("GEMINI_API_KEY")
                         genai.configure(api_key=api_key)
-                        model = genai.GenerativeModel('gemini-1.5-flash-latest')
+                        model_name = os.getenv("MODEL", "gemini-flash-latest")  # Default fallback if MODEL is not set
+                        model = genai.GenerativeModel(model_name)
                         response = model.generate_content(summarization_prompt, stream=True)
                         
                         full_response = ""

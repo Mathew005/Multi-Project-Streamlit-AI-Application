@@ -3,3 +3,8 @@ requests
 python-dotenv
 google-generativeai
 PyPDF2
+feedparser
+faster-whisper
+pydub
+scipy
+numpy
