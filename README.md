@@ -21,7 +21,7 @@ An efficient tool to generate detailed, structured summaries of your documents.
 
 ### 📰 News Summarizer
 A real-time news summarizer that fetches trending news articles and generates AI summaries using the GNews API.
-- **GNews API Integration:** Uses the GNews API with a public API key to fetch news
+- **GNews API Integration:** Uses the GNews API with your personal API key (configured in .env file) to fetch news
 - **Category & Search:** Browse by categories (General, World, Business, Technology, etc.) or search for specific topics
 - **Language & Country Filters:** Select news in different languages and from specific countries
 - **Date Filtering:** Filter news by date range (Today, This week, This month, or All time)
@@ -39,18 +39,13 @@ Converts meeting audio recordings into structured notes and action items.
 - **Language Support:** Offers language selection for improved transcription accuracy
 - **Structured Output:** Provides organized sections for meeting points, action items, decisions, and next steps
 
-## 🚀 Project Roadmap & To-Do List
-
-This project is actively being developed. Here is a list of planned features and applications:
-
-- [x] **Global News Topic Tracker:** Scrape Google News and summarize trending topics using LLMs. (Updated with GNews API)
-- [ ] **Multi-Modal Assistant:** Build an assistant capable of answering queries based on both text and images.
-- [x] **Meeting Notes and Action Item Extractor:** Create an app to convert meeting audio into structured notes and task lists using Whisper and other APIs.
-- [ ] **Custom Chatbot Q&A (RAG Application):** Develop an AI system using LangChain and ChromaDB for advanced document Q&A.
-- [ ] **Multi-Agent System using LangGraph:** Build a multi-agent system for coding, testing, and debugging automation.
-- [ ] **Fine-Tuning Open-Source LLMs for Price Prediction (Optional Bonus Project):** Fine-tune an open-source model using QLoRA to predict product prices.
-
-Note: The News Summarizer and Meeting Notes Extractor have been completed and are now available in the application.
+### 📚 Vector Store Retrieval
+An RAG (Retrieval-Augmented Generation) system that enables semantic search and Q&A with your documents using vector embeddings.
+- **Similarity Search:** Uses vector embeddings to find semantically relevant document chunks
+- **Multi-Model Support:** Supports both local Ollama and cloud-based Gemini models
+- **Qdrant Integration:** Utilizes Qdrant as a vector database for efficient storage and retrieval
+- **Document Ingestion:** Indexes documents (PDF, TXT, MD) into the vector store for future retrieval
+- **Contextual Responses:** Generates responses based on retrieved document content with source citations
 
 ## 🛠️ Setup and Installation
 
@@ -59,6 +54,7 @@ Follow these steps to get the application running on your local machine.
 ### 1. Prerequisites
 - Python 3.8 or higher.
 - (Optional but Recommended) [Ollama](https://ollama.com/) installed and running locally if you wish to use local models. You can pull a model by running `ollama pull llama3`.
+- [Qdrant](https://qdrant.tech/) (for Vector Store Retrieval features) - can be run locally or via Docker
 
 ### 2. Clone the Repository
 ```bash
@@ -79,20 +75,7 @@ source venv/bin/activate
 ```
 
 ### 4. Install Dependencies
-Create a `requirements.txt` file with the following content:
-```txt
-streamlit
-requests
-python-dotenv
-google-generativeai
-PyPDF2
-feedparser
-faster-whisper
-pydub
-scipy
-numpy
-```
-Then, install the packages:
+Install the packages from the requirements.txt file:
 ```bash
 pip install -r requirements.txt
 ```
@@ -115,8 +98,12 @@ GEMINI_API_KEY="YOUR_GEMINI_API_KEY_HERE"
 # --- Global Model Configuration ---
 # Model to use for all AI operations
 MODEL="gemini-flash-latest"
+
+# --- GNews API Configuration ---
+# Get your API key from https://gnews.io/
+GNEWS_API_KEY=your-gnews-api-key-here
 ```
-**Important:** Replace `"YOUR_GEMINI_API_KEY_HERE"` with your actual Gemini API key.
+**Important:** Replace `"YOUR_GEMINI_API_KEY_HERE"` with your actual Gemini API key and update other API keys as needed.
 
 ## ▶️ How to Run the Application
 
@@ -137,14 +124,18 @@ The project is organized to support multiple pages, following Streamlit's multi-
 
 ```
 .
-├── .env                  # Environment variables for API keys and configs
-├── main.py               # The main entry point for the Streamlit app (Welcome Page)
-├── pages/                # Directory for individual Streamlit project pages
+├── .env                          # Environment variables for API keys and configs
+├── collection_manifest.json      # Qdrant collection manifest
+├── main.py                       # The main entry point for the Streamlit app (Welcome Page)
+├── pages/                        # Directory for individual Streamlit project pages
 │   ├── 1_🤖_LLM_Chatbot.py
 │   ├── 2_📄_Document_Summarizer.py
 │   ├── 3_🎙️_Meeting_Notes_Extractor.py
-│   └── 4_📰_News_Summarizer.py
-├── requirements.txt      # List of Python dependencies
+│   ├── 4_📰_News_Summarizer.py
+│   └── 5_📚_Vector_Store_Retrieval.py
+├── qdrant_data/                  # Local Qdrant vector database storage
+├── requirements.txt              # List of Python dependencies
+├── .cache/                       # Model cache directory
 ├── .gitignore
-└── README.md             # This file
+└── README.md                     # This file
 ```

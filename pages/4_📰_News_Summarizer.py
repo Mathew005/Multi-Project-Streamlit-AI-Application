@@ -20,7 +20,10 @@ st.caption("Trending news, summarized for you by an AI model.")
 load_dotenv()
 
 # --- Constants ---
-GNEWS_API_KEY = "dc56ca41bd5fd2c228bbf01b0afed940"  # Public API key provided by user
+GNEWS_API_KEY = os.getenv("GNEWS_API_KEY")  # Get from .env file
+if not GNEWS_API_KEY:
+    st.error("GNEWS_API_KEY not found in .env file. Please add it to the .env file.")
+    st.stop()
 GNEWS_BASE_URL = "https://gnews.io/api/v4"
 
 # --- Database Caching Functions ---
@@ -261,7 +264,7 @@ with st.sidebar:
         "Switzerland": "ch",
         "Poland": "pl"
     }
-    selected_country = st.selectbox("Country", options=list(countries.keys()), index=0)
+    selected_country = st.selectbox("Country", options=list(countries.keys()), index=list(countries.keys()).index("India"))
     
     # Number of articles
     num_articles = st.slider("Number of articles", min_value=1, max_value=20, value=10)

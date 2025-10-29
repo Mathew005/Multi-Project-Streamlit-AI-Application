@@ -8,3 +8,8 @@ faster-whisper
 pydub
 scipy
 numpy
+qdrant-client
+sentence-transformers
+docx2txt
+docling
+fastembed

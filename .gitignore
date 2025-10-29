@@ -1,2 +1,61 @@
+# Environment variables
 .env
+.env.local
+.env.*.local
+
+# Dependencies
+venv/
+env/
+ENV/
+.venv/
+env.bak/
+venv.bak/
+.python-version
+
+# Databases
 *.db
+*.sqlite
+*.sqlite3
+
+# Audio files
+*.wav
+*.mp3
+*.m4a
+*.m4v
+*.mov
+
+# Models and cache
+.cache/
+__pycache__/
+*.py[cod]
+*$py.class
+*$pyc.class
+
+# Logs
+*.log
+logs/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Other
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Qdrant data (if needed to be ignored)
+qdrant_data/
