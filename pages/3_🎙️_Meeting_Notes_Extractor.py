@@ -34,7 +34,7 @@ This tool converts your meeting audio recordings into structured notes and actio
 
 
 # --- Whisper Transcription Function ---
-def transcribe_audio_with_whisper(audio_file_path: str) -> str:
+def transcribe_audio_with_whisper(audio_file_path: str, progress_bar) -> str:
     """
     Transcribe audio using faster-whisper library with chunked processing for better performance
     """
@@ -101,7 +101,7 @@ def transcribe_audio_with_whisper(audio_file_path: str) -> str:
             
             # Calculate progress
             progress = min(end_ms / duration_ms, 1.0)
-            st.progress(progress, text=f"Processing chunk {i} of {total_chunks}")
+            progress_bar.progress(progress, text=f"Processing chunk {i} of {total_chunks}")
         
         return transcription.strip()
     except ImportError:
@@ -128,7 +128,7 @@ def extract_meeting_notes(transcript: str, provider: str, model_name: str) -> Op
             
             genai.configure(api_key=api_key)
             # Use the model specified in the .env file
-            model_name = os.getenv("MODEL", "gemini-flash")  # Default fallback if MODEL is not set
+            model_name = os.getenv("MODEL", "gemini-flash-latest")  # Default fallback if MODEL is not set
             model = genai.GenerativeModel(model_name)
             
             prompt = f"""
@@ -214,7 +214,7 @@ with st.sidebar:
         if os.getenv("GEMINI_API_KEY"):
             st.success("Gemini API Key loaded.")
             # Use the model specified in the .env file
-            selected_model = os.getenv("MODEL", "gemini-flash")  # Default fallback if MODEL is not set
+            selected_model = os.getenv("MODEL", "gemini-flash-latest")  # Default fallback if MODEL is not set
         else:
             st.error("GEMINI_API_KEY not found.")
 
@@ -338,7 +338,7 @@ if uploaded_file is not None:
         
         # Transcribe the audio using Whisper
         status_text.text("Transcribing audio with Whisper (this may take several minutes)...")
-        transcription = transcribe_audio_with_whisper(wav_filename)
+        transcription = transcribe_audio_with_whisper(wav_filename, progress_bar)
         
         if transcription:
             progress_bar.progress(60)
