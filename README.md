@@ -139,3 +139,9 @@ The project is organized to support multiple pages, following Streamlit's multi-
 ├── .gitignore
 └── README.md                     # This file
 ```
+
+## Images
+
+<img width="1788" height="848" alt="image" src="https://github.com/user-attachments/assets/e6280dad-f28b-45dd-8822-a677db180150" />
+
+<img width="1788" height="856" alt="image" src="https://github.com/user-attachments/assets/82ec7f81-eb24-45f5-a967-c90acee2399f" />
